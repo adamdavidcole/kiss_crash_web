@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>14 - Go Live</title>
+    <link rel="stylesheet" href="https://use.typekit.net/srg6osj.css" />
+
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
@@ -15,6 +17,8 @@
       crossorigin="anonymous"
       playsinline
       style="display: none"
+      autoplay
+      muted
     >
       <source src="videos/kiss_crash_sd_web.mp4" type="video/mp4" />
     </video>
@@ -24,8 +28,108 @@
       crossorigin="anonymous"
       playsinline
       style="display: none"
+      autoplay
+      muted
     >
       <source src="videos/slow_kiss_sd_web.mp4" type="video/mp4" />
     </video>
+
+    <div id="details_button_container">
+      <button id="show_details_button">About</button>
+    </div>
+
+    <div id="content">
+      <div id="intro_container">
+        <div id="intro">
+          <h1>Kiss/Crash</h1>
+          <p>
+            Kiss/Crash is an immersive, multi-screen installation using AI
+            imagery to mediate on desire in the digital age and the gap between
+            real experience and artificial representations. Originally exhibited
+            in London, the experience is now reproduced in digital space.
+          </p>
+          <button id="enter_button">Enter</button>
+        </div>
+      </div>
+
+      <div id="details_container" class="hide">
+        <button id="hide_details_button">Close</button>
+        <div id="details_content_outer">
+          <div id="details_content_inner">
+            <div id="details_title">
+              <h2>Kiss/Crash</h2>
+              <h3 id="details_subtitle">
+                an interactive installation by
+                <a
+                  href="https://www.instagram.com/adamcole.studio/"
+                  target="_blank"
+                  >Adam Cole</a
+                >
+              </h3>
+            </div>
+            <style>
+              .embed-container {
+                position: relative;
+                padding-bottom: 56.25%;
+                height: 0;
+                overflow: hidden;
+                max-width: 100%;
+              }
+              .embed-container iframe,
+              .embed-container object,
+              .embed-container embed {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+              }
+            </style>
+            <p>
+              <b>Kiss/Crash</b> is a multi-screen work exploring the subject of
+              AI-imagery and representation as well as the autobiographical
+              themes of loneliness, desire, and intimacy in the digital age. The
+              installation consists of three individual works in a shared space,
+              <i>Kiss/Crash</i>, <i>Me Kissing Me</i>, and
+              <i>Crash Me, Gently</i>, which all play with augmenting,
+              inverting, and negating the iconic image of the kiss using
+              diffusion-based image translation.
+            </p>
+
+            <div class="embed_total_container">
+              <div class="embed-container">
+                <iframe
+                  src="https://www.youtube.com/embed/Ou_NULPB0e8"
+                  frameborder="0"
+                  allowfullscreen
+                ></iframe>
+              </div>
+              <p class="caption">
+                Video of the physical installation of <b>Kiss/Crash</b> which
+                took place in South-East London, winter 2023. On the central
+                screen is the audio-visual piece <i>Kiss/Crash</i>, in which a
+                car crash is turned into a kiss, projected on either side of the
+                central screen is <i>Me Kissing Me</i>, a video in which the
+                artist in a slow kiss with himself is transformed via AI, and
+                central within the space is <i>Crash Me, Gently</i>, an
+                interactive installation consisting of a television and foot
+                pedal that allows viewers to accelerate the intensity of the
+                kiss on the tv screen.
+              </p>
+            </div>
+            <div id="horizontal_border"></div>
+
+            <h3>Motivation</h3>
+            <p>This is my motivation.</p>
+
+            <h3>Process</h3>
+            <p>This is my process.</p>
+
+            <h3>Results</h3>
+            <p>These are my results.</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
