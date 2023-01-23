@@ -28,7 +28,44 @@ const size = new THREE.Vector3();
 const center = new THREE.Vector3();
 const box = new THREE.Box3();
 
-function fitCameraToSelection(camera, controls, selection, fitOffset = 1.2) {
+function getFitCameraToSelectionDistance(
+  camera,
+  controls,
+  selection,
+  fitOffset = 1.2
+) {
+  console.log("selection", selection);
+  box.makeEmpty();
+  for (const object of selection) {
+    box.expandByObject(object);
+  }
+
+  box.getSize(size);
+  box.getCenter(center);
+
+  console.log(size, center);
+
+  const maxSize = Math.max(size.x, size.y, size.z);
+  console.log("maxsize", maxSize);
+  const fitHeightDistance =
+    maxSize / (2 * Math.atan((Math.PI * camera.fov) / 360));
+  const fitWidthDistance = fitHeightDistance / camera.aspect;
+  let distance = fitOffset * Math.min(fitHeightDistance, fitWidthDistance);
+  if (sizes.height > sizes.width) {
+    fitOffset = 1.5;
+    distance = fitOffset * 0.8 * Math.max(fitHeightDistance, fitWidthDistance);
+  }
+
+  return distance;
+}
+
+function fitCameraToSelection(
+  camera,
+  controls,
+  selection,
+  fitOffset = 1.2,
+  setPosition = true
+) {
   console.log("selection", selection);
   box.makeEmpty();
   for (const object of selection) {
@@ -60,16 +97,21 @@ function fitCameraToSelection(camera, controls, selection, fitOffset = 1.2) {
     .normalize()
     .multiplyScalar(distance);
 
-  controls.maxDistance = distance * 10;
-  controls.target.copy(center);
+  if (setPosition) {
+    controls.maxDistance = distance * 10;
+    controls.target.copy(center);
+    camera.near = distance / 100;
+    camera.far = distance * 100;
+    camera.updateProjectionMatrix();
 
-  camera.near = distance / 100;
-  camera.far = distance * 100;
-  camera.updateProjectionMatrix();
+    camera.position.copy(controls.target).sub(direction);
 
-  camera.position.copy(controls.target).sub(direction);
+    controls.update();
+  } else {
+    // controls.update();
 
-  controls.update();
+    return center.sub(direction).z;
+  }
 }
 
 /**
@@ -302,7 +344,14 @@ window.addEventListener("resize", () => {
   camera.aspect = sizes.width / sizes.height;
   camera.updateProjectionMatrix();
 
-  fitCameraToSelection(camera, controls, [centralBox, rightBox, leftBox], 1.4);
+  if (intro.classList.contains("hide")) {
+    fitCameraToSelection(
+      camera,
+      controls,
+      [centralBox, rightBox, leftBox],
+      1.4
+    );
+  }
 
   // Update renderer
   renderer.setSize(sizes.width, sizes.height);
@@ -344,11 +393,19 @@ const intro = document.getElementById("intro_container");
 const details = document.getElementById("details_container");
 function hideIntro() {
   intro.classList.add("hide");
+  const distance = fitCameraToSelection(
+    camera,
+    controls,
+    [centralBox, rightBox, leftBox],
+    1.75,
+    false
+  );
+
   gsap.to(camera.position, {
     duration: 3,
     delay: 0,
     // y: -verticalShift,
-    z: planeWidth * 2.25,
+    z: distance,
     ease: "power2.out",
   });
 }
@@ -397,7 +454,7 @@ hideDetailsButton.addEventListener("click", () => {
   resumeVideos();
 });
 
-content.remove();
+// content.remove();
 
 /**
  * Renderer
@@ -418,8 +475,6 @@ document.addEventListener("mousemove", onDocumentMouseMove);
 
 effect = new ParallaxBarrierEffect(renderer);
 effect.setSize(sizes.width, sizes.height);
-
-fitCameraToSelection(camera, controls, [centralBox, rightBox, leftBox], 1.5);
 
 /**
  * Animate
