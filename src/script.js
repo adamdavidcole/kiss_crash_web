@@ -434,6 +434,7 @@ function resumeVideos() {
 const enterButton = document.getElementById("enter_button");
 enterButton.addEventListener("click", () => {
   console.log("clicked");
+  // document.documentElement.requestFullscreen();
   hideIntro();
   playVideos();
 });
