@@ -11,6 +11,7 @@ body
     font-family: matrix-ii, serif;
     font-weight: 400;
     font-style: normal;
+    color: #681010;
 }
 
 button, input[type="submit"], input[type="reset"] {
@@ -53,7 +54,7 @@ button, input[type="submit"], input[type="reset"] {
 #intro_container {
     width: 100%;
     height: 100%;
-    background-color: rgba(200, 0, 0, 0.93);
+    background-color: rgb(222 173 112 / 96%);
     opacity: 1;
     transition: opacity 0.3s ease-out;
 }
@@ -97,13 +98,16 @@ h1 {
   }
 
 h2 {
-    font-size: 60px;
+    font-size: 80px;
     letter-spacing: 3px;
     font-weight: bold;
 }
 
 h3 {
     font-size: 21px;
+}
+h3.caption {
+    margin-top: 10px;
 }
 
 p {
@@ -114,46 +118,14 @@ p {
     max-width: 800px;
     font-weight: 100;
     padding: 0 10px;
+
+    color: black;
 }
 
 .caption {
     font-size: 16px;
     margin-top: 20px;
 }
-
-@media screen and (max-width: 1200px) {
-    h1 {
-      font-size:100px;
-    }
-
-    p {
-        font-size: 18px;
-        max-width: 600px;
-    }
-  }
-
-  @media screen and (max-width: 700px) {
-    h1 {
-      font-size:60px;
-    }
-
-    p {
-        font-size: 16px;
-        max-width: 400px;
-    }
-  }
-
-  @media screen and (max-height: 500px) {
-    h1 {
-        font-size: 48px;
-        margin-top: 20px;
-    }
-
-    p {
-        font-size: 14px;
-        max-width: 400px;
-    }
-  }
 
 #intro button {
     width: 100px;
@@ -177,8 +149,9 @@ p {
     opacity: 1;
 }
 #intro button:hover {
-    color: #001F3F;
-    background-color: #fff;
+    color: rgb(225, 212, 196);
+    background-color: #681010;
+    /* border-color: #fff; */
 }
 
 #videobcg {
@@ -217,7 +190,7 @@ p {
     width: 100%;
     height: 100%;
     z-index: 2;
-    background-color: rgba(200, 0, 0, 0.93);
+    background-color: rgb(222 173 112 / 96%);
 
     transition: left 0.3s ease-out;
 
@@ -273,3 +246,71 @@ p {
     margin-top: 40px;
     margin-bottom: 40px;
 }
+
+
+@media screen and (max-width: 1200px) {
+    h1 {
+      font-size:100px;
+    }
+
+    h2 {
+        font-size: 52px;
+    }
+
+    h3 {
+        font-size: 18px;
+    }
+
+    p {
+        font-size: 18px;
+        max-width: 600px;
+    }
+  }
+
+  @media screen and (max-width: 700px) {
+    h1 {
+      font-size:60px;
+    }
+
+    h2 {
+        font-size: 48px;
+    }
+
+    h3 {
+        font-size: 16px;
+    }
+
+    p {
+        font-size: 16px;
+        max-width: 400px;
+    }
+
+    .caption {
+        font-size: 12px;
+    }
+
+    #details_title {
+        /* flex-direction: column; */
+        margin: 30px 0 30px 0;
+    }
+
+    #details_subtitle_extra {
+        display: none;
+    }
+
+    
+  }
+
+  @media screen and (max-height: 500px) {
+    h1 {
+        font-size: 48px;
+        margin-top: 20px;
+    }
+
+    p {
+        font-size: 14px;
+        max-width: 400px;
+    }
+
+    
+  }
