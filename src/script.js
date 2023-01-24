@@ -131,9 +131,9 @@ slowKissVideo.play();
 //   this.currentTime = 0;
 // });
 
-const planeWidth = 20;
+const planeWidth = 5;
 const planeHeight = planeWidth * (9 / 16);
-const boxThickness = planeWidth * 0.01;
+const boxThickness = planeWidth * 0.02;
 
 const kissCrashVideoTexture = new THREE.VideoTexture(kissCrashVideo);
 const slowKKissVideoTexture = new THREE.VideoTexture(slowKissVideo);
@@ -142,14 +142,14 @@ const slowKKissVideoTexture = new THREE.VideoTexture(slowKissVideo);
  * Video Meshes
  */
 const horizontalShift = planeWidth * (3 / 4);
-const verticalShift = planeWidth / 10;
+const verticalShift = planeWidth / 7;
 const depthShift = planeWidth / 2;
 
 // CENTRAL PLANE
 
 const planeGeometry = new THREE.PlaneGeometry(planeWidth, planeHeight);
 const kissCrashMaterial = new THREE.MeshBasicMaterial({
-  //   color: 0xffffff,
+  // color: 0xffffff,
   side: THREE.DoubleSide,
   map: kissCrashVideoTexture,
 });
@@ -181,7 +181,7 @@ const boxGeometry = new THREE.BoxGeometry(
   planeHeight,
   boxThickness
 );
-const boxMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+const boxMaterial = new THREE.MeshBasicMaterial({ color: 0x232427 });
 const centralBox = new THREE.Mesh(boxGeometry, boxMaterial);
 centralBox.position.set(
   centralPlane.position.x,
@@ -232,25 +232,25 @@ scene.add(leftBox);
 // scene.add(environment);
 
 const cloudname = "graycloud";
-scene.background = new THREE.CubeTextureLoader()
-  .setPath("textures/cloudy/")
-  .load([
-    `${cloudname}_lf.jpg`,
-    `${cloudname}_rt.jpg`,
-    `${cloudname}_up.jpg`,
-    `${cloudname}_dn.jpg`,
-    `${cloudname}_ft.jpg`,
-    `${cloudname}_bk.jpg`,
-  ]);
+// scene.background = new THREE.CubeTextureLoader()
+//   .setPath("textures/cloudy/")
+//   .load([
+//     `${cloudname}_lf.jpg`,
+//     `${cloudname}_rt.jpg`,
+//     `${cloudname}_up.jpg`,
+//     `${cloudname}_dn.jpg`,
+//     `${cloudname}_ft.jpg`,
+//     `${cloudname}_bk.jpg`,
+//   ]);
 // scene.backgroundBlurriness = 0.05;
 // scene.backgroundIntensity = 0.15;
 
 const color = 0x200000; // white
 scene.background = new THREE.Color(color);
-scene.backgroundIntensity = 0.005;
+// scene.backgroundIntensity = 0.005;
 
 const near = 0;
-const far = planeWidth * 10;
+const far = planeWidth * 7.5;
 scene.fog = new THREE.Fog(color, near, far);
 
 // scene.fog = new THREE.FogExp2(0xefd1b5, 0.05);
@@ -317,7 +317,7 @@ const floorMesh = new THREE.Mesh(floorGeometry, floorMat);
 floorMesh.receiveShadow = true;
 floorMesh.rotation.x = -Math.PI / 2.0;
 floorMesh.position.set(0, -planeHeight * 1.5, 0);
-scene.add(floorMesh);
+// scene.add(floorMesh);
 
 /**
  * Interaction
@@ -349,7 +349,7 @@ window.addEventListener("resize", () => {
       camera,
       controls,
       [centralBox, rightBox, leftBox],
-      1.4
+      1.5
     );
   }
 
@@ -380,10 +380,10 @@ scene.add(camera);
 // Controls
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true;
-controls.enablePan = true;
-controls.enableRotate = true;
-// controls.minDistance = 10;
-// controls.maxDistance = 60;
+controls.enablePan = false;
+controls.enableRotate = false;
+// controls.minDistance = planeWidth * 0.1;
+// controls.maxDistance = planeWidth * 2;
 
 /**
  * UI
@@ -405,8 +405,8 @@ function hideIntro() {
     duration: 3,
     delay: 0,
     // y: -verticalShift,
-    z: distance,
-    ease: "power2.out",
+    z: distance * 1,
+    ease: "back.out(2)",
   });
 }
 
@@ -456,6 +456,27 @@ hideDetailsButton.addEventListener("click", () => {
 });
 
 // content.remove();
+// camera.position.z = planeWidth * 3;
+
+for (let i = 0; i < 20; i++) {
+  const geometry = new THREE.BoxGeometry(
+    planeWidth * 2.5,
+    planeWidth * 2.5,
+    planeWidth * 2.5
+  );
+  const edgesGeometry = new THREE.EdgesGeometry(geometry);
+  const material = new THREE.LineBasicMaterial({
+    linewidth: 20,
+    color: 0xdead70,
+  });
+
+  let edges = new THREE.LineSegments(edgesGeometry, material);
+  edges.position.z = (i - 10) * planeWidth * (2.5 / 4) * -1;
+  scene.add(edges);
+}
+
+// scene.add(object);
+// scene.add(wireframe);
 
 /**
  * Renderer
@@ -468,8 +489,8 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.shadowMap.enabled = true;
 
 function onDocumentMouseMove(event) {
-  mouseX = (event.clientX - windowHalfX) / 50;
-  mouseY = (event.clientY - windowHalfY) / 50;
+  mouseX = (event.clientX - windowHalfX) / 500;
+  mouseY = (event.clientY - windowHalfY) / 500;
 }
 // https://github.com/mrdoob/three.js/blob/master/examples/webgl_effects_parallaxbarrier.html
 document.addEventListener("mousemove", onDocumentMouseMove);
@@ -485,10 +506,10 @@ const clock = new THREE.Clock();
 const tick = () => {
   const elapsedTime = clock.getElapsedTime();
 
-  // camera.position.x += (mouseX - camera.position.x) * 0.025;
-  // camera.position.y += (-mouseY - camera.position.y) * 0.025;
+  camera.position.x += (mouseX - camera.position.x) * 0.025;
+  camera.position.y += (-mouseY - camera.position.y) * 0.025;
 
-  // camera.lookAt(scene.position);
+  camera.lookAt(scene.position);
 
   // Update controls
   controls.update();
