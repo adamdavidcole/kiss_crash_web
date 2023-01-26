@@ -5,8 +5,11 @@ import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
 import * as dat from "lil-gui";
 import { ParallaxBarrierEffect } from "three/addons/effects/ParallaxBarrierEffect.js";
 import gsap from "gsap";
+import Splide from "@splidejs/splide";
 
 import "@splidejs/splide/css";
+
+const threeDebug = false;
 
 /**
  * Base
@@ -15,8 +18,19 @@ import "@splidejs/splide/css";
 const gui = new dat.GUI();
 gui.hide();
 
+/**
+ * Sizes
+ */
+const sizes = {
+  width: window.innerWidth,
+  height: window.innerHeight,
+};
+
 // Canvas
 const canvas = document.querySelector("canvas.webgl");
+if (threeDebug) {
+  canvas.style.zIndex = 100;
+}
 
 // Scene
 const scene = new THREE.Scene();
@@ -87,7 +101,7 @@ function fitCameraToSelection(
   fitOffset = 1.4;
   let distance = fitOffset * Math.min(fitHeightDistance, fitWidthDistance);
   if (sizes.height > sizes.width) {
-    fitOffset = 1.5;
+    fitOffset = 1;
     distance = fitOffset * 0.8 * Math.max(fitHeightDistance, fitWidthDistance);
   }
 
@@ -135,7 +149,7 @@ slowKissVideo.play();
 
 const planeWidth = 5;
 const planeHeight = planeWidth * (9 / 16);
-const boxThickness = planeWidth * 0.02;
+const boxThickness = planeWidth * 0.03;
 
 const kissCrashVideoTexture = new THREE.VideoTexture(kissCrashVideo);
 const slowKKissVideoTexture = new THREE.VideoTexture(slowKissVideo);
@@ -160,23 +174,8 @@ const slowKissMaterial = new THREE.MeshBasicMaterial({
   side: THREE.DoubleSide,
   map: slowKKissVideoTexture,
 });
-const centralPlane = new THREE.Mesh(planeGeometry, kissCrashMaterial);
-centralPlane.position.set(0, verticalShift, 0);
-scene.add(centralPlane);
 
 // ADJACENT PLANES
-
-const rightPlane = new THREE.Mesh(planeGeometry, slowKissMaterial);
-rightPlane.rotation.y = -Math.PI / 2;
-rightPlane.position.set(horizontalShift, verticalShift, depthShift);
-scene.add(rightPlane);
-
-const leftPlane = new THREE.Mesh(planeGeometry, slowKissMaterial);
-leftPlane.rotation.y = -Math.PI / 2;
-leftPlane.position.set(-horizontalShift, verticalShift, depthShift);
-scene.add(leftPlane);
-
-// BOXES
 const boxShift = 0.01;
 const boxGeometry = new THREE.BoxGeometry(
   planeWidth,
@@ -184,36 +183,115 @@ const boxGeometry = new THREE.BoxGeometry(
   boxThickness
 );
 const boxMaterial = new THREE.MeshBasicMaterial({ color: 0x232427 });
+
+const centralPlane = new THREE.Mesh(planeGeometry, kissCrashMaterial);
 const centralBox = new THREE.Mesh(boxGeometry, boxMaterial);
 centralBox.position.set(
   centralPlane.position.x,
   centralPlane.position.y,
   centralPlane.position.z - boxThickness / 2 - boxShift
 );
+const centerGroup = new THREE.Group();
+centerGroup.add(centralPlane);
+centerGroup.add(centralBox);
+centerGroup.position.set(0, verticalShift, 0);
 
+// centralPlane.position.set(0, verticalShift, 0);
+// scene.add(centralPlane);
+
+const rightPlane = new THREE.Mesh(planeGeometry, slowKissMaterial);
 const rightBox = new THREE.Mesh(boxGeometry, boxMaterial);
 rightBox.position.set(
-  rightPlane.position.x + boxThickness / 2 + boxShift,
+  rightPlane.position.x,
   rightPlane.position.y,
-  rightPlane.position.z
+  rightPlane.position.z - boxThickness / 2 - boxShift
 );
-rightBox.rotation.set(...rightPlane.rotation);
 
+const rightGroup = new THREE.Group();
+rightGroup.add(rightPlane);
+rightGroup.add(rightBox);
+
+// rightPlane.rotation.y = -Math.PI / 2;
+// rightPlane.position.set(horizontalShift, verticalShift, depthShift);
+// scene.add(rightPlane);
+
+const leftPlane = new THREE.Mesh(planeGeometry, slowKissMaterial);
 const leftBox = new THREE.Mesh(boxGeometry, boxMaterial);
 leftBox.position.set(
-  leftPlane.position.x - boxThickness / 2 - boxShift,
-  leftPlane.position.y,
-  leftPlane.position.z
+  rightPlane.position.x,
+  rightPlane.position.y,
+  rightPlane.position.z - boxThickness / 2 - boxShift
 );
-leftBox.rotation.set(...leftPlane.rotation);
+
+const leftGroup = new THREE.Group();
+leftGroup.add(leftPlane);
+leftGroup.add(leftBox);
+
+scene.add(centerGroup);
+scene.add(rightGroup);
+scene.add(leftGroup);
+
+// leftPlane.rotation.y = -Math.PI / 2;
+// leftPlane.position.set(-horizontalShift, verticalShift, depthShift);
+// scene.add(leftPlane);
+
+// BOXES
+// const centralBox = new THREE.Mesh(boxGeometry, boxMaterial);
+// centralBox.position.set(
+//   centralPlane.position.x,
+//   centralPlane.position.y,
+//   centralPlane.position.z - boxThickness / 2 - boxShift
+// );
+
+// const leftBox = new THREE.Mesh(boxGeometry, boxMaterial);
+// leftBox.position.set(
+//   leftPlane.position.x - boxThickness / 2 - boxShift,
+//   leftPlane.position.y,
+//   leftPlane.position.z
+// );
+// leftBox.rotation.set(...leftPlane.rotation);
 
 // const
 centralBox.castShadow = true;
 rightBox.castShadow = true;
 leftBox.castShadow = true;
-scene.add(centralBox);
-scene.add(rightBox);
-scene.add(leftBox);
+// scene.add(centralBox);
+// scene.add(rightBox);
+// scene.add(leftBox);
+
+function positionBoxesForDesktop() {
+  // set position
+  centerGroup.position.set(0, verticalShift, 0);
+
+  rightGroup.position.set(horizontalShift, verticalShift, depthShift);
+  rightGroup.rotation.set(0, -Math.PI / 2, 0);
+  rightPlane.rotation.set(0, 0, 0);
+
+  leftGroup.position.set(-horizontalShift, verticalShift, depthShift);
+  leftGroup.rotation.set(0, Math.PI / 2, 0);
+}
+
+function positionBoxesForMobile() {
+  // set position
+  centerGroup.position.set(0, 0, 0);
+
+  rightGroup.position.set(0, planeHeight * 1, 0);
+  rightGroup.rotation.set(Math.PI / 3, 0, Math.PI);
+  rightPlane.rotation.set(0, Math.PI, 0);
+
+  leftGroup.position.set(0, -planeHeight * 1, 0);
+  leftGroup.rotation.set(-Math.PI / 3, 0, 0);
+}
+
+function setScreenPositions() {
+  if (sizes.height > sizes.width) {
+    positionBoxesForMobile();
+  } else {
+    positionBoxesForDesktop();
+  }
+}
+
+setScreenPositions();
 
 /**
  * Environment
@@ -252,7 +330,8 @@ scene.background = new THREE.Color(color);
 // scene.backgroundIntensity = 0.005;
 
 const near = 0;
-const far = planeWidth * 7.5;
+// const far = planeWidth * 7.5;
+const far = planeWidth * 20;
 scene.fog = new THREE.Fog(color, near, far);
 
 // scene.fog = new THREE.FogExp2(0xefd1b5, 0.05);
@@ -260,7 +339,7 @@ scene.fog = new THREE.Fog(color, near, far);
 /**
  * Lighting
  */
-const bulbLight = new THREE.PointLight(0xffee88, 0.25, 100, 20);
+const bulbLight = new THREE.PointLight(0xffee88, 0.25, 100, 0.2);
 
 // const bulbMat = new THREE.MeshStandardMaterial({
 //   emissive: 0xffffee,
@@ -271,54 +350,55 @@ const bulbLight = new THREE.PointLight(0xffee88, 0.25, 100, 20);
 bulbLight.position.set(0, planeHeight, planeWidth);
 bulbLight.castShadow = true;
 bulbLight.shadow.radius = 10;
-scene.add(bulbLight);
+// scene.add(bulbLight);
 
 const hemiLight = new THREE.HemisphereLight(0xddeeff, 0x0f0e0d, 1.2);
-scene.add(hemiLight);
-let floorMat = new THREE.MeshStandardMaterial({
-  roughness: 0.8,
-  color: 0xffffff,
-  metalness: 0.2,
-  bumpScale: 0.0005,
-});
-const repeatValue = 20;
-const textureLoader = new THREE.TextureLoader();
-textureLoader.load(
-  "textures/concrete/Concrete_019_BaseColor.jpg",
-  function (map) {
-    map.wrapS = THREE.RepeatWrapping;
-    map.wrapT = THREE.RepeatWrapping;
-    // map.anisotropy = 4;
-    map.repeat.set(repeatValue, repeatValue);
-    // map.encoding = THREE.sRGBEncoding;
-    floorMat.map = map;
-    floorMat.needsUpdate = true;
-  }
-);
-textureLoader.load("textures/concrete/Concrete_019_Height.png", function (map) {
-  map.wrapS = THREE.RepeatWrapping;
-  map.wrapT = THREE.RepeatWrapping;
-  // map.anisotropy = 4;
-  map.repeat.set(repeatValue, repeatValue);
-  floorMat.bumpMap = map;
-  floorMat.needsUpdate = true;
-});
-textureLoader.load(
-  "textures/concrete/Concrete_019_Roughness.jpg",
-  function (map) {
-    map.wrapS = THREE.RepeatWrapping;
-    map.wrapT = THREE.RepeatWrapping;
-    // map.anisotropy = 4;
-    map.repeat.set(repeatValue, repeatValue);
-    floorMat.roughnessMap = map;
-    floorMat.needsUpdate = true;
-  }
-);
-const floorGeometry = new THREE.PlaneGeometry(1000, 1000);
-const floorMesh = new THREE.Mesh(floorGeometry, floorMat);
-floorMesh.receiveShadow = true;
-floorMesh.rotation.x = -Math.PI / 2.0;
-floorMesh.position.set(0, -planeHeight * 1.5, 0);
+// scene.add(hemiLight);
+
+// let floorMat = new THREE.MeshStandardMaterial({
+//   roughness: 0.8,
+//   color: 0xffffff,
+//   metalness: 0.2,
+//   bumpScale: 0.0005,
+// });
+// const repeatValue = 20;
+// const textureLoader = new THREE.TextureLoader();
+// textureLoader.load(
+//   "textures/concrete/Concrete_019_BaseColor.jpg",
+//   function (map) {
+//     map.wrapS = THREE.RepeatWrapping;
+//     map.wrapT = THREE.RepeatWrapping;
+//     // map.anisotropy = 4;
+//     map.repeat.set(repeatValue, repeatValue);
+//     // map.encoding = THREE.sRGBEncoding;
+//     floorMat.map = map;
+//     floorMat.needsUpdate = true;
+//   }
+// );
+// textureLoader.load("textures/concrete/Concrete_019_Height.png", function (map) {
+//   map.wrapS = THREE.RepeatWrapping;
+//   map.wrapT = THREE.RepeatWrapping;
+//   // map.anisotropy = 4;
+//   map.repeat.set(repeatValue, repeatValue);
+//   floorMat.bumpMap = map;
+//   floorMat.needsUpdate = true;
+// });
+// textureLoader.load(
+//   "textures/concrete/Concrete_019_Roughness.jpg",
+//   function (map) {
+//     map.wrapS = THREE.RepeatWrapping;
+//     map.wrapT = THREE.RepeatWrapping;
+//     // map.anisotropy = 4;
+//     map.repeat.set(repeatValue, repeatValue);
+//     floorMat.roughnessMap = map;
+//     floorMat.needsUpdate = true;
+//   }
+// );
+// const floorGeometry = new THREE.PlaneGeometry(1000, 1000);
+// const floorMesh = new THREE.Mesh(floorGeometry, floorMat);
+// floorMesh.receiveShadow = true;
+// floorMesh.rotation.x = -Math.PI / 2.0;
+// floorMesh.position.set(0, -planeHeight * 1.5, 0);
 // scene.add(floorMesh);
 
 /**
@@ -329,18 +409,12 @@ let mouseY = 0;
 let windowHalfX = window.innerWidth / 2;
 let windowHalfY = window.innerHeight / 2;
 
-/**
- * Sizes
- */
-const sizes = {
-  width: window.innerWidth,
-  height: window.innerHeight,
-};
-
 window.addEventListener("resize", () => {
   // Update sizes
   sizes.width = window.innerWidth;
   sizes.height = window.innerHeight;
+
+  setScreenPositions();
 
   // Update camera
   camera.aspect = sizes.width / sizes.height;
@@ -382,10 +456,15 @@ scene.add(camera);
 // Controls
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true;
-controls.enablePan = false;
-controls.enableRotate = false;
-// controls.minDistance = planeWidth * 0.1;
-// controls.maxDistance = planeWidth * 5;
+if (!threeDebug) {
+  controls.enablePan = false;
+  controls.enableRotate = false;
+  // controls.minDistance = planeWidth * 0.1;
+  // controls.maxDistance = planeWidth * 5;
+} else {
+  // content.remove();
+  camera.position.z = planeWidth * 3;
+}
 
 /**
  * UI
@@ -462,9 +541,6 @@ Array.from(hideDetailsButton).forEach(function (element) {
 });
 // hideDetailsButton;
 
-// content.remove();
-// camera.position.z = planeWidth * 3;
-
 for (let i = 0; i < 20; i++) {
   const geometry = new THREE.BoxGeometry(
     planeWidth * 2.5,
@@ -502,11 +578,6 @@ function onDocumentMouseMove(event) {
 // https://github.com/mrdoob/three.js/blob/master/examples/webgl_effects_parallaxbarrier.html
 document.addEventListener("mousemove", onDocumentMouseMove);
 
-effect = new ParallaxBarrierEffect(renderer);
-effect.setSize(sizes.width, sizes.height);
-
-import Splide from "@splidejs/splide";
-
 new Splide(".splide", {
   type: "loop",
   width: "100%",
@@ -529,10 +600,12 @@ const clock = new THREE.Clock();
 const tick = () => {
   const elapsedTime = clock.getElapsedTime();
 
-  camera.position.x += (mouseX - camera.position.x) * 0.025;
-  camera.position.y += (-mouseY - camera.position.y) * 0.025;
+  if (!threeDebug) {
+    camera.position.x += (mouseX - camera.position.x) * 0.025;
+    camera.position.y += (-mouseY - camera.position.y) * 0.025;
 
-  camera.lookAt(scene.position);
+    camera.lookAt(scene.position);
+  }
 
   // Update controls
   controls.update();
