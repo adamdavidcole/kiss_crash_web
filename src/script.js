@@ -433,8 +433,6 @@ window.addEventListener("resize", () => {
   // Update renderer
   renderer.setSize(sizes.width, sizes.height);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-  effect.setSize(window.innerWidth, window.innerHeight);
 });
 
 /**
@@ -587,12 +585,19 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.shadowMap.enabled = true;
 
 function onDocumentMouseMove(event) {
+  console.log(event);
   mouseX = (event.clientX - windowHalfX) / 500;
   mouseY = (event.clientY - windowHalfY) / 500;
 }
 // https://github.com/mrdoob/three.js/blob/master/examples/webgl_effects_parallaxbarrier.html
 document.addEventListener("mousemove", onDocumentMouseMove);
-document.addEventListener("touchmove", onDocumentMouseMove);
+document.addEventListener("touchmove", (event) => {
+  const touch = event.touches[0];
+  if (!event || !event.touches) return;
+
+  mouseX = (touch.clientX - windowHalfX) / 100;
+  mouseY = (touch.clientY - windowHalfY) / 100;
+});
 
 new Splide(".splide", {
   type: "loop",
