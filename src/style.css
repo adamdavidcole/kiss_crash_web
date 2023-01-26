@@ -138,7 +138,10 @@ p {
 }
 
 .blockquote_spacer {
-    width: 20px;
+    width: 0px;
+}
+.blockquote p {
+    padding: 0 58px;
 }
 
 .caption {
@@ -389,6 +392,9 @@ p {
         font-size: 18px;
         max-width: 620px;
     }
+    .blockquote p {
+        padding: 0 30px;
+    }
 
     .splide img {
         height: 45vh;
@@ -423,6 +429,9 @@ p {
         font-size: 16px;
         /* max-width: 400px; */
         width: 100%;
+    }
+    .blockquote p {
+        padding: 0 0 0 20px;
     }
 
     #details_content_inner p,
