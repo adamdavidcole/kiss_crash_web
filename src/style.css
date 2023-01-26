@@ -313,8 +313,9 @@ p {
 
 #show_details_button, #social_buttons_container a {
     opacity: 0.5;
+    transition: opacity 0.3s ease;
 }
-#show_details_button:hover, #social_buttons_container a:hover, #header_title:hover, #copyright:hover {
+#show_details_button:hover, #social_buttons_container a:hover, #co {
     opacity: 1;
 }
 
@@ -323,6 +324,7 @@ p {
     opacity: 0.5;
     font-size: 12px;
     padding-right: 20px;
+    flex-grow: 1;
     padding-left: 20px;
     cursor: default;
 }
@@ -330,15 +332,20 @@ p {
 #header_title {
     cursor: default;
     position: absolute;
-    left: 20px;
-    top: 20px;
 
     z-index: 10;
     color: white;
     opacity: 0.5;
     padding-right: 20px;
     flex-grow: 1;
-    padding-left: 20px;
+    padding-left: min(20px, 5%);
+    padding-top: 20px;
+    /* width: 100%; */
+    
+    transition: opacity 0.5s ease;
+}
+.details_visible #header_title  {
+    opacity: 1;
 }
 
 /**
@@ -401,7 +408,7 @@ p {
 
     #details_title {
         /* flex-direction: column; */
-        margin: 30px 0 30px 0;
+        margin: 60px 0 30px 0;
     }
 
     #details_subtitle_extra {

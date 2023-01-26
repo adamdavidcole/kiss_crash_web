@@ -528,6 +528,7 @@ showDetailsButton.addEventListener("click", () => {
   // intro.classList.add("hide");
   // content.classList.remove("hide");
   details.classList.remove("hide");
+  document.body.classList.add("details_visible");
   pauseVideos();
 });
 
@@ -536,6 +537,7 @@ Array.from(hideDetailsButton).forEach(function (element) {
   element.addEventListener("click", () => {
     console.log("hide details clicked");
     details.classList.add("hide");
+    document.body.classList.remove("details_visible");
     resumeVideos();
   });
 });
