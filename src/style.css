@@ -132,6 +132,15 @@ p {
     color: black;
 }
 
+.blockquote {
+    display: flex;
+    width: 100%;
+}
+
+.blockquote_spacer {
+    width: 20px;
+}
+
 .caption {
     font-size: 16px;
     margin-top: 20px;
@@ -235,7 +244,8 @@ p {
 #details_content_inner h3,
 #details_content_inner #details_title, 
 #details_content_inner .embed_total_container,
-#details_content_inner #horizontal_border {
+#details_content_inner #horizontal_border,
+#details_content_inner .blockquote  {
     max-width: 800px;
     width: 90%;
 }
@@ -268,6 +278,7 @@ p {
     width: 100%;
     border-bottom: 2px solid black;
     /* padding-bottom: 40px; */
+    margin-top: 20px;
     margin-bottom: 40px;
 }
 
@@ -387,7 +398,8 @@ p {
     #details_content_inner h3,
     #details_content_inner #details_title, 
     #details_content_inner .embed_total_container,
-    #details_content_inner #horizontal_border {
+    #details_content_inner #horizontal_border,
+    #details_content_inner .blockquote {
         max-width: 600px;
         width: 90%;
     }
@@ -418,7 +430,8 @@ p {
     #details_content_inner #details_title, 
     #details_content_inner .embed_total_container,
     #details_content_inner #horizontal_border,
-    #intro_text_container {
+    #intro_text_container,
+    #details_content_inner .blockquote {
         width: 90%;
     }
 
