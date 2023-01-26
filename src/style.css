@@ -315,7 +315,7 @@ p {
     opacity: 0.5;
     transition: opacity 0.3s ease;
 }
-#show_details_button:hover, #social_buttons_container a:hover, #co {
+#show_details_button:hover, #social_buttons_container a:hover, #copyright:hover, #header_title:hover {
     opacity: 1;
 }
 
@@ -324,7 +324,6 @@ p {
     opacity: 0.5;
     font-size: 12px;
     padding-right: 20px;
-    flex-grow: 1;
     padding-left: 20px;
     cursor: default;
 }
