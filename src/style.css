@@ -326,6 +326,7 @@ p {
     padding-right: 20px;
     padding-left: 20px;
     cursor: default;
+    transition: opacity 0.3s ease; 
 }
 
 #header_title {
@@ -381,6 +382,16 @@ p {
     .splide img {
         height: 45vh;
     }    
+
+    #details_content_inner p,
+    #details_content_inner h3,
+    #details_content_inner #details_title, 
+    #details_content_inner .embed_total_container,
+    #details_content_inner #horizontal_border {
+        max-width: 600px;
+        width: 90%;
+    }
+
   }
 
   @media screen and (max-width: 700px) {
@@ -398,7 +409,16 @@ p {
 
     p {
         font-size: 16px;
-        max-width: 400px;
+        /* max-width: 400px; */
+        width: 100%;
+    }
+
+    #details_content_inner p,
+    #details_content_inner h3,
+    #details_content_inner #details_title, 
+    #details_content_inner .embed_total_container,
+    #details_content_inner #horizontal_border,
+    #intro_text_container {
         width: 90%;
     }
 
