@@ -31,6 +31,7 @@ const canvas = document.querySelector("canvas.webgl");
 if (threeDebug) {
   canvas.style.zIndex = 100;
 }
+// canvas.style.zIndex = 1;
 
 // Scene
 const scene = new THREE.Scene();
@@ -519,12 +520,18 @@ enterButton.addEventListener("click", () => {
   // document.documentElement.requestFullscreen();
   hideIntro();
   playVideos();
+
+  setTimeout(() => {
+    content.style.zIndex = -1;
+  }, 500);
 });
 
 const showDetailsButton = document.getElementById("show_details_button");
 showDetailsButton.addEventListener("click", () => {
   details_scroller.scrollTop = 0;
   console.log("show details clicked");
+  content.style.zIndex = "inherit";
+
   // intro.classList.add("hide");
   // content.classList.remove("hide");
   details.classList.remove("hide");
@@ -539,6 +546,12 @@ Array.from(hideDetailsButton).forEach(function (element) {
     details.classList.add("hide");
     document.body.classList.remove("details_visible");
     resumeVideos();
+
+    if (intro.classList.contains("hide")) {
+      setTimeout(() => {
+        content.style.zIndex = -1;
+      }, 500);
+    }
   });
 });
 // hideDetailsButton;
