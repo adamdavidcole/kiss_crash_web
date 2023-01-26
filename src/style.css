@@ -399,6 +399,7 @@ p {
     p {
         font-size: 16px;
         max-width: 400px;
+        width: 90%;
     }
 
     .caption {

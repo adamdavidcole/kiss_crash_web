@@ -592,6 +592,7 @@ function onDocumentMouseMove(event) {
 }
 // https://github.com/mrdoob/three.js/blob/master/examples/webgl_effects_parallaxbarrier.html
 document.addEventListener("mousemove", onDocumentMouseMove);
+document.addEventListener("touchmove", onDocumentMouseMove);
 
 new Splide(".splide", {
   type: "loop",
