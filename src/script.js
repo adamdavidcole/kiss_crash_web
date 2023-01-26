@@ -6,6 +6,8 @@ import * as dat from "lil-gui";
 import { ParallaxBarrierEffect } from "three/addons/effects/ParallaxBarrierEffect.js";
 import gsap from "gsap";
 
+import "@splidejs/splide/css";
+
 /**
  * Base
  */
@@ -370,8 +372,8 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   100
 );
-camera.position.x = 0;
-camera.position.y = 0;
+// camera.position.x = 0;
+// camera.position.y = 0;
 camera.position.z = planeWidth * 0.25;
 // camera.focalLength = 3;
 
@@ -383,7 +385,7 @@ controls.enableDamping = true;
 controls.enablePan = false;
 controls.enableRotate = false;
 // controls.minDistance = planeWidth * 0.1;
-// controls.maxDistance = planeWidth * 2;
+// controls.maxDistance = planeWidth * 5;
 
 /**
  * UI
@@ -391,6 +393,7 @@ controls.enableRotate = false;
 const content = document.getElementById("content");
 const intro = document.getElementById("intro_container");
 const details = document.getElementById("details_container");
+const details_scroller = document.getElementById("details_content_outer");
 function hideIntro() {
   intro.classList.add("hide");
   const distance = fitCameraToSelection(
@@ -441,6 +444,7 @@ enterButton.addEventListener("click", () => {
 
 const showDetailsButton = document.getElementById("show_details_button");
 showDetailsButton.addEventListener("click", () => {
+  details_scroller.scrollTop = 0;
   console.log("show details clicked");
   // intro.classList.add("hide");
   // content.classList.remove("hide");
@@ -448,12 +452,15 @@ showDetailsButton.addEventListener("click", () => {
   pauseVideos();
 });
 
-const hideDetailsButton = document.getElementById("hide_details_button");
-hideDetailsButton.addEventListener("click", () => {
-  console.log("hide details clicked");
-  details.classList.add("hide");
-  resumeVideos();
+const hideDetailsButton = document.getElementsByClassName("close_details");
+Array.from(hideDetailsButton).forEach(function (element) {
+  element.addEventListener("click", () => {
+    console.log("hide details clicked");
+    details.classList.add("hide");
+    resumeVideos();
+  });
 });
+// hideDetailsButton;
 
 // content.remove();
 // camera.position.z = planeWidth * 3;
@@ -498,10 +505,26 @@ document.addEventListener("mousemove", onDocumentMouseMove);
 effect = new ParallaxBarrierEffect(renderer);
 effect.setSize(sizes.width, sizes.height);
 
+import Splide from "@splidejs/splide";
+
+new Splide(".splide", {
+  type: "loop",
+  width: "100%",
+  // height: "400px",
+  autoWidth: true,
+  autoHeight: true,
+  gap: "2vw",
+  focus: "center",
+
+  // padding: "20%",
+}).mount();
+
 /**
  * Animate
  */
 const clock = new THREE.Clock();
+
+// document.getElementById("webgl").style = "transform: rotate(90deg)";
 
 const tick = () => {
   const elapsedTime = clock.getElapsedTime();

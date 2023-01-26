@@ -5,11 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>14 - Go Live</title>
     <link rel="stylesheet" href="https://use.typekit.net/srg6osj.css" />
+    <!-- Link to the file hosted on your server, -->
+    <!-- <link
+      rel="stylesheet"
+      href="node_modules/@splidejs/splide/dist/css/splide.min.css"
+    /> -->
 
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <canvas class="webgl"></canvas>
+    <canvas id="webgl" class="webgl"></canvas>
     <script type="module" src="./script.js"></script>
     <video
       id="kiss_crash_video"
@@ -34,26 +39,56 @@
       <source src="videos/slow_kiss_sd_web.mp4" type="video/mp4" />
     </video>
 
+    <div id="header_title">Kiss/Crash</div>
     <div id="details_button_container">
       <button id="show_details_button">About</button>
+    </div>
+
+    <div id="social_buttons_container">
+      <span id="copyright">© Adam Cole</span>
+      <div id="social_buttons_container_links">
+        <a href="https://twitter.com/adamcole_studio" target="_blank"
+          ><img src="icons/twitter.png"
+        /></a>
+        <a href="https://www.instagram.com/adamcole.studio/" target="_blank">
+          <img src="icons/instagram.png" />
+        </a>
+      </div>
     </div>
 
     <div id="content">
       <div id="intro_container">
         <div id="intro">
           <h1>Kiss/Crash</h1>
-          <p>
-            Kiss/Crash is an immersive, multi-screen installation using AI
-            imagery to mediate on desire in the digital age and the gap between
-            real experience and artificial representations. Originally exhibited
-            in London, the experience is now reproduced in digital space.
-          </p>
-          <button id="enter_button">Enter</button>
+          <div>
+            <p>
+              Kiss/Crash is an immersive, multi-screen installation by new media
+              artist
+              <a
+                href="https://www.instagram.com/adamcole.studio/"
+                target="_blank"
+                class="social_link nounderline"
+                >Adam Cole</a
+              >. The piece uses <i>artificially generated imagery</i> to
+              meditate of the nature of desire in the age of AI and points to
+              the expanding gap between real experience and artificial
+              representations.
+            </p>
+
+            <p>
+              Originally exhibited in <i>London</i>, the experience is now
+              reproduced in digital space.
+            </p>
+          </div>
+
+          <div>
+            <button id="enter_button">Enter</button>
+          </div>
         </div>
       </div>
 
       <div id="details_container" class="hide">
-        <button id="hide_details_button">Close</button>
+        <button id="hide_details_button" class="close_details">Close</button>
         <div id="details_content_outer">
           <div id="details_content_inner">
             <div id="details_title">
@@ -94,18 +129,30 @@
               installation consists of three individual works in a shared space,
               <i>Kiss/Crash</i>, <i>Me Kissing Me</i>, and
               <i>Crash Me, Gently</i>, which all play with augmenting,
-              inverting, and negating the iconic image of the kiss using
-              diffusion-based image translation.
+              inverting, and negating the iconic image of the kiss using AI
+              image translation.
+            </p>
+
+            <p>
+              Repurposing a <i>classic Hollywood</i> aesthetic, the piece
+              reflects on the nature of images and places AI models within a
+              history of image-production technologies. In the process, it
+              reveals the logic of AI imagery and hints at how
+              <i>our relationship to reality</i> will continue to be stretched
+              and shaped by artificial representations at an accelerating pace.
             </p>
 
             <div class="embed_total_container">
               <div class="embed-container">
                 <iframe
-                  src="https://www.youtube.com/embed/Ou_NULPB0e8"
+                  src="https://www.youtube-nocookie.com/embed/Ou_NULPB0e8?modestbranding=1"
+                  title="YouTube video player"
                   frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowfullscreen
                 ></iframe>
               </div>
+
               <p class="caption">
                 Video of the physical installation of <b>Kiss/Crash</b> which
                 took place in South-East London, winter 2023. On the central
@@ -124,13 +171,220 @@
             <h3>Motivation</h3>
             <p>This is my motivation.</p>
 
+            <div
+              class="splide"
+              role="group"
+              aria-label="Splide Basic HTML Example"
+            >
+              <div class="splide__track">
+                <ul class="splide__list">
+                  <li class="splide__slide"><img src="images/005.png" /></li>
+                  <li class="splide__slide"><img src="images/002.png" /></li>
+                  <li class="splide__slide"><img src="images/004.png" /></li>
+                  <li class="splide__slide"><img src="images/001.png" /></li>
+                  <li class="splide__slide"><img src="images/006.png" /></li>
+                </ul>
+              </div>
+            </div>
+
             <h3>Process</h3>
             <p>This is my process.</p>
 
-            <h3>Results</h3>
-            <p>These are my results.</p>
+            <h3>Individual Works</h3>
+            <p><b>Kiss/Crash</b></p>
+            <p>
+              In this piece, a car crash is turned into a kiss using AI image
+              translation. The initial video used is a test crash of a classic
+              1950’s car. Over a minute in length, the cars repeatedly crash
+              into each other. Each time the colliding metal transforms into
+              faces pressed together and the sound of the crash smoothly
+              transitions into a romantic song rich in Hollywood nostalgia. As
+              the video progresses, the impacts crescendo in speed and
+              intensity, and the image translations become more erotic, violent
+              and unhinged until finally the tension is released and the
+              original slow-motion video of the crash plays with no translation
+              applied.
+            </p>
+
+            <div class="embed_total_container">
+              <div class="embed-container">
+                <iframe
+                  src="https://www.youtube-nocookie.com/embed/UXiSLu7mVHA?modestbranding=1"
+                  title="YouTube video player"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                ></iframe>
+              </div>
+            </div>
+
+            <p><b>Me Kissing Me</b></p>
+            <p>
+              In <i>Me Kissing Me</i>, the artist engaged in a slow romantic
+              kiss with a mirror image of himself on a desolate black
+              background. The slow-motion kiss is translated via AI-generation
+              into augmented and perverted versions of the original scene,
+              seamlessly transforming the artist and his double into various
+              kissing couples such as cinematic lovers, religious idols,
+              political celebrities, and uncanny creatures. Beneath the
+              AI-generated romances, the underlying video of the artist kissing
+              himself gently fades in and out, reminding the viewer of the
+              artificial nature of the generated romance.
+            </p>
+
+            <div class="embed_total_container">
+              <div class="embed-container">
+                <iframe
+                  src="https://www.youtube-nocookie.com/embed/9gjcVgEstgo?modestbranding=1"
+                  title="YouTube video player"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                ></iframe>
+              </div>
+            </div>
+
+            <p><b>Crash Me, Gently</b></p>
+            <p>
+              <i>Crash Me, Gently</i> is an interactive installation, this time
+              transforming a kiss into a crash. Here a vintage television loops
+              a video of the artist kissing himself which transforms into a
+              smooth Hollywood kiss whenever the faces meet. Viewers are invited
+              to accelerate a foot pedal placed in front of the TV which
+              increases the intensity of the images, causing them to become more
+              cinematic, but also increasingly disjointed, pornographic, and
+              violent. Contexts blend together as celebrities, creatures, and
+              images of destruction take the place of the central lovers. The
+              audio also accelerates, with sounds of metal crashing whenever the
+              couple’s lips meet. The image becomes increasingly destabilized
+              until the pedal is released, after which the TV returns to its
+              calm loop.
+            </p>
+            <div class="embed_total_container">
+              <div class="embed-container">
+                <iframe
+                  src="https://www.youtube-nocookie.com/embed/YE1gdVxbuws?modestbranding=1"
+                  title="YouTube video player"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                ></iframe>
+              </div>
+            </div>
+
+            <!-- <div id="horizontal_border"></div>
+
+            <h3>Themes</h3>
+            <p><b>Simulated Arousal</b></p>
+            <p>
+              The central video of <i>Kiss/Crash</i> points to the power of
+              images by creating a suggestive metaphor between two seemingly
+              unrelated, but ubiquitous images from western media: the car crash
+              and the kiss. By appropriating its aesthetic from classic
+              Hollywood, an industry which brands itself as the dream factory,
+              this piece aims to relate AI-imagery to a history of image
+              production technologies meant to incite our desires through
+              artificial representations.
+            </p>
+            <p>
+              The anticipated experience of the viewer is one of arousal as they
+              watch the crash repeatedly turned into an intimate scene, an
+              experience reinforced by the acceleration of the video’s rhythm
+              and sexualized, violent content. But that desire, both in this
+              work and in our culture in general, is fueled, homogenized and
+              repurposed by artificial representations. The generated desire is
+              real. The images are not. The audience is left to consider the way
+              fictional representations in media can arouse intense desires,
+              ones that can never be satisfied and might entirely exclude whole
+              sets of people, and the way AI-generated content may continue that
+              tradition.
+            </p>
+
+            <p><b>Desire and Loneliness in Artificial Space</b></p>
+            <p>
+              Both <i>Me Kissing Me</i> and <i>Crash Me, Gently</i>, highlight
+              the contrast between the individual experience of loneliness and
+              the desire for authentic, sensuous experiences with others. In
+              both these pieces, the isolated central figure is in a cold
+              mirrored kiss with himself, which is repeatedly transformed into a
+              warm sensual scene. In these pieces the self is quite literally
+              projected into romanticized representations, visually
+              demonstrating the ways we subconsciously see ourselves in
+              fictional images.
+            </p>
+            <p>
+              In <i>Me Kissing Me</i>, the process of image translation becomes
+              visible as the original figures fade in and out of various
+              generated poses, revealing the way AI tools can easily manipulate
+              digital surfaces. These augmentations have the potential to be
+              incredibly beautiful but can also feel quite shallow, like a thin,
+              seductive veneer which obscures the identity of the original. In
+              that sense, they become illustrative of our increasingly mediated
+              relationship to reality in the digital era. One gets a sense of
+              the way AI translation will stand between the original and our
+              perception of it, especially with the specter of the metaverse on
+              the horizon.
+            </p>
+            <p>
+              The central aspect of <i>Crash Me, Gently</i> is its interactivity
+              which invites the viewer to use the foot pedal to accelerate the
+              intensity of the experience. The viewer becomes complicit in the
+              hunt for more exaggerated representations of "love". The frenetic
+              changes of context as the pedal is pressed, including the
+              fast-paced mixture of violence, sex, celebrity and disaster,
+              mimics the increasing schizophrenia of the digital world. The
+              immediate result of pressing the pedal and being bombarded with
+              these sensual scenes is perversely satisfying, but also questions
+              the way desire can be aroused by representations while never truly
+              being satisfied.
+            </p>
+            <p>
+              All these pieces hint at the underlying logic of AI-imagery and
+              suggest the way artificial representations may increasingly stand
+              in for real sensations in the future.
+            </p> -->
 
             <div id="horizontal_border"></div>
+
+            <h3>Artist Bio</h3>
+            <p>
+              Adam is an American new media artist working at the intersection
+              of art and technology. He is currently based in the UK and
+              recently completed his master's at the Creative Computing
+              Institute, University of the Arts London. His work spans both the
+              digital and physical and focuses on the various ways identity and
+              intimacy are mediated through technology. Using an innovative
+              computational practice, he explores these themes using
+              microprocessors, 3D rendering engines, creative coding algorithms,
+              and AI networks. With a keen interest in the history of images,
+              Adam's work attempts to continue a queer tradition of twisting
+              popular media conventions to discover unspoken double meanings.
+            </p>
+
+            <p>
+              Follow him on
+              <i
+                ><a
+                  href="https://twitter.com/adamcole_studio"
+                  target="_blank"
+                  class="social_link"
+                  >twitter</a
+                ></i
+              >
+              and
+              <i
+                ><a
+                  href="https://www.instagram.com/adamcole.studio/"
+                  target="_blank"
+                  class="social_link"
+                  >instagram</a
+                ></i
+              >.
+            </p>
+
+            <div id="end_of_details_button_container" class="close_details">
+              <button id="end_of_details_button">Close</button>
+            </div>
           </div>
         </div>
       </div>
