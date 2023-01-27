@@ -92,6 +92,8 @@ function fitCameraToSelection(
 
     camera.position.copy(controls.target).sub(direction);
 
+    scene.fog.near = camera.position.z * 2;
+
     controls.update();
   } else {
     // controls.update();
@@ -318,11 +320,6 @@ const color = 0x200000; // white
 scene.background = new THREE.Color(color);
 // scene.backgroundIntensity = 0.005;
 
-const near = 0;
-// const far = planeWidth * 7.5;
-const far = planeWidth * 20;
-scene.fog = new THREE.Fog(color, near, far);
-
 // scene.fog = new THREE.FogExp2(0xefd1b5, 0.05);
 
 /**
@@ -439,6 +436,11 @@ camera.position.z = planeWidth * 0.25;
 // camera.focalLength = 3;
 
 scene.add(camera);
+
+const near = camera.position.z * 2;
+// const far = planeWidth * 7.5;
+const far = planeWidth * 11;
+scene.fog = new THREE.Fog(color, near, far);
 
 // Controls
 const controls = new OrbitControls(camera, canvas);
