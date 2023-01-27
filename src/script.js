@@ -45,37 +45,6 @@ const size = new THREE.Vector3();
 const center = new THREE.Vector3();
 const box = new THREE.Box3();
 
-function getFitCameraToSelectionDistance(
-  camera,
-  controls,
-  selection,
-  fitOffset = 1.2
-) {
-  console.log("selection", selection);
-  box.makeEmpty();
-  for (const object of selection) {
-    box.expandByObject(object);
-  }
-
-  box.getSize(size);
-  box.getCenter(center);
-
-  console.log(size, center);
-
-  const maxSize = Math.max(size.x, size.y, size.z);
-  console.log("maxsize", maxSize);
-  const fitHeightDistance =
-    maxSize / (2 * Math.atan((Math.PI * camera.fov) / 360));
-  const fitWidthDistance = fitHeightDistance / camera.aspect;
-  let distance = fitOffset * Math.min(fitHeightDistance, fitWidthDistance);
-  if (sizes.height > sizes.width) {
-    fitOffset = 1.5;
-    distance = fitOffset * 0.8 * Math.max(fitHeightDistance, fitWidthDistance);
-  }
-
-  return distance;
-}
-
 function fitCameraToSelection(
   camera,
   controls,
@@ -137,6 +106,7 @@ function fitCameraToSelection(
 const kissCrashVideo = document.getElementById("kiss_crash_video");
 kissCrashVideo.currentTime = 3;
 kissCrashVideo.play();
+let hasKissCrashVideoLoaded = false;
 
 // kissCrashVideo.addEventListener("play", function () {
 // this.currentTime = 3;
@@ -144,6 +114,24 @@ kissCrashVideo.play();
 const slowKissVideo = document.getElementById("slow_kiss_video");
 slowKissVideo.currentTime = 0;
 slowKissVideo.play();
+let hasSlowKissVideoLoaded = false;
+
+kissCrashVideo.onplaying = function () {
+  console.log("kiss/crash video is now loaded and playing");
+  hasKissCrashVideoLoaded = true;
+
+  if (hasKissCrashVideoLoaded && hasSlowKissVideoLoaded) {
+    enableEnter();
+  }
+};
+slowKissVideo.onplaying = function () {
+  console.log("me kissing me video is now loaded and playing");
+  hasSlowKissVideoLoaded = true;
+
+  if (hasKissCrashVideoLoaded && hasSlowKissVideoLoaded) {
+    enableEnter();
+  }
+};
 // slowKissVideo.addEventListener("play", function () {
 //   this.currentTime = 0;
 // });
@@ -552,6 +540,19 @@ Array.from(hideDetailsButton).forEach(function (element) {
     }
   });
 });
+
+function enableEnter() {
+  enterButton.disabled = false;
+  enterButton.classList.remove("is_loading");
+  console.log("enable enter");
+}
+function disableEnter() {
+  enterButton.disabled = true;
+  enterButton.classList.add("is_loading");
+}
+if (!hasKissCrashVideoLoaded || !hasSlowKissVideoLoaded) {
+  disableEnter();
+}
 // hideDetailsButton;
 
 for (let i = 0; i < 20; i++) {

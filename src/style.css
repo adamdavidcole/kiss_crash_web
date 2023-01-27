@@ -68,6 +68,26 @@ button, input[type="submit"], input[type="reset"] {
     opacity: 0;
 }
 
+#enter_button.is_loading {
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+}
+#enter_button {
+    opacity: 1;
+}
+#enter_button #loading_text {
+    display: none;
+}
+#enter_button #enter_text {
+    display: inline;
+}
+#enter_button.is_loading #loading_text {
+    display: inline;
+}
+#enter_button.is_loading #enter_text {
+    display: none;
+}
+
 #intro {   
     height: 100%; 
     display: flex;
