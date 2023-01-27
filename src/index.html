@@ -3,7 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>14 - Go Live</title>
+    <title>Kiss/Crash | Adam Cole | AI Art Installation</title>
+
+    <link rel="preconnect" href="https://use.typekit.net" crossorigin />
+    <link rel="preload" as="style" href="https://use.typekit.net/srg6osj.css" />
     <link rel="stylesheet" href="https://use.typekit.net/srg6osj.css" />
     <!-- Link to the file hosted on your server, -->
     <!-- <link
@@ -13,6 +16,22 @@
 
     <link rel="stylesheet" href="./style.css" />
   </head>
+
+  <!-- Google tag (gtag.js) -->
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-3NXDBY0VNS"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-3NXDBY0VNS");
+  </script>
+
   <body>
     <canvas id="webgl" class="webgl"></canvas>
     <script type="module" src="./script.js"></script>
