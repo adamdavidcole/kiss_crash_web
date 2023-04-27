@@ -11,6 +11,8 @@ import "@splidejs/splide/css";
 
 const threeDebug = false;
 
+console.log("JAVASCRIPT LOADED!");
+
 /**
  * Base
  */
@@ -52,7 +54,6 @@ function fitCameraToSelection(
   fitOffset = 1.2,
   setPosition = true
 ) {
-  console.log("selection", selection);
   box.makeEmpty();
   for (const object of selection) {
     box.expandByObject(object);
@@ -61,10 +62,7 @@ function fitCameraToSelection(
   box.getSize(size);
   box.getCenter(center);
 
-  console.log(size, center);
-
   const maxSize = Math.max(size.x, size.y, size.z);
-  console.log("maxsize", maxSize);
   const fitHeightDistance =
     maxSize / (2 * Math.atan((Math.PI * camera.fov) / 360));
   const fitWidthDistance = fitHeightDistance / camera.aspect;
@@ -74,8 +72,6 @@ function fitCameraToSelection(
     fitOffset = 1;
     distance = fitOffset * 0.8 * Math.max(fitHeightDistance, fitWidthDistance);
   }
-
-  console.log("distance", distance, "controls.target", controls.target);
 
   const direction = controls.target
     .clone()
@@ -106,34 +102,34 @@ function fitCameraToSelection(
  * Video Textures
  */
 const kissCrashVideo = document.getElementById("kiss_crash_video");
-kissCrashVideo.currentTime = 3;
-kissCrashVideo.play();
-let hasKissCrashVideoLoaded = false;
+// kissCrashVideo.currentTime = 3;
+// kissCrashVideo.play();
+// let hasKissCrashVideoLoaded = false;
 
-// kissCrashVideo.addEventListener("play", function () {
-// this.currentTime = 3;
-// });
+// // kissCrashVideo.addEventListener("play", function () {
+// // this.currentTime = 3;
+// // });
 const slowKissVideo = document.getElementById("slow_kiss_video");
-slowKissVideo.currentTime = 0;
-slowKissVideo.play();
-let hasSlowKissVideoLoaded = false;
+// slowKissVideo.currentTime = 0;
+// slowKissVideo.play();
+// let hasSlowKissVideoLoaded = false;
 
-kissCrashVideo.onplaying = function () {
-  console.log("kiss/crash video is now loaded and playing");
-  hasKissCrashVideoLoaded = true;
+// kissCrashVideo.onplaying = function () {
+//   console.log("kiss/crash video is now loaded and playing");
+//   hasKissCrashVideoLoaded = true;
 
-  if (hasKissCrashVideoLoaded && hasSlowKissVideoLoaded) {
-    enableEnter();
-  }
-};
-slowKissVideo.onplaying = function () {
-  console.log("me kissing me video is now loaded and playing");
-  hasSlowKissVideoLoaded = true;
+//   if (hasKissCrashVideoLoaded && hasSlowKissVideoLoaded) {
+//     enableEnter();
+//   }
+// };
+// slowKissVideo.onplaying = function () {
+//   console.log("me kissing me video is now loaded and playing");
+//   hasSlowKissVideoLoaded = true;
 
-  if (hasKissCrashVideoLoaded && hasSlowKissVideoLoaded) {
-    enableEnter();
-  }
-};
+//   if (hasKissCrashVideoLoaded && hasSlowKissVideoLoaded) {
+//     enableEnter();
+//   }
+// };
 // slowKissVideo.addEventListener("play", function () {
 //   this.currentTime = 0;
 // });
@@ -504,7 +500,6 @@ function resumeVideos() {
  */
 const enterButton = document.getElementById("enter_button");
 enterButton.addEventListener("click", () => {
-  console.log("clicked");
   // document.documentElement.requestFullscreen();
   hideIntro();
   playVideos();
@@ -514,23 +509,24 @@ enterButton.addEventListener("click", () => {
   }, 500);
 });
 
-const showDetailsButton = document.getElementById("show_details_button");
-showDetailsButton.addEventListener("click", () => {
-  details_scroller.scrollTop = 0;
-  console.log("show details clicked");
-  content.style.zIndex = "inherit";
+// const showDetailsButton = document.getElementById("show_details_button");
+const showDetailsButtons = document.getElementsByClassName("show_details");
+Array.from(showDetailsButtons).forEach((btn) =>
+  btn.addEventListener("click", () => {
+    details_scroller.scrollTop = 0;
+    content.style.zIndex = "inherit";
 
-  // intro.classList.add("hide");
-  // content.classList.remove("hide");
-  details.classList.remove("hide");
-  document.body.classList.add("details_visible");
-  pauseVideos();
-});
+    // intro.classList.add("hide");
+    // content.classList.remove("hide");
+    details.classList.remove("hide");
+    document.body.classList.add("details_visible");
+    pauseVideos();
+  })
+);
 
 const hideDetailsButton = document.getElementsByClassName("close_details");
 Array.from(hideDetailsButton).forEach(function (element) {
   element.addEventListener("click", () => {
-    console.log("hide details clicked");
     details.classList.add("hide");
     document.body.classList.remove("details_visible");
     resumeVideos();
@@ -588,7 +584,6 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.shadowMap.enabled = true;
 
 function onDocumentMouseMove(event) {
-  console.log(event);
   mouseX = (event.clientX - windowHalfX) / 500;
   mouseY = (event.clientY - windowHalfY) / 500;
 }

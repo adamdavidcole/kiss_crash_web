@@ -10,7 +10,7 @@
       name="description"
       content="Kiss/Crash is a multi-screen installation that uses AI imagery to reflect on the theme of desire in the age of AI while pointing to the gap between real experience and artificial representations"
     />
-    <meta name="image" content="https://kiss-crash.com/images/001.png" />
+    <meta name="image" content="https://kiss-crash.com/images/001.jpg" />
     <!-- Schema.org for Google -->
     <meta
       itemprop="name"
@@ -80,7 +80,7 @@
 
   <body>
     <canvas id="webgl" class="webgl"></canvas>
-    <script type="module" src="./script.js"></script>
+
     <video
       id="kiss_crash_video"
       loop
@@ -90,7 +90,7 @@
       autoplay
       muted
     >
-      <source src="videos/kiss_crash_sd_web.mp4" type="video/mp4" />
+      <source src="videos/kiss_crash_sd_web_2.mp4" type="video/mp4" />
     </video>
     <video
       id="slow_kiss_video"
@@ -101,12 +101,12 @@
       autoplay
       muted
     >
-      <source src="videos/slow_kiss_sd_web.mp4" type="video/mp4" />
+      <source src="videos/slow_kiss_sd_web_2.mp4" type="video/mp4" />
     </video>
 
     <div id="header_title">Kiss/Crash</div>
     <div id="details_button_container">
-      <button id="show_details_button">About</button>
+      <button id="show_details_button" class="show_details">About</button>
     </div>
 
     <div id="social_buttons_container">
@@ -149,6 +149,9 @@
             <button id="enter_button" class="is_loading" disabled>
               <div id="loading_text">Loading</div>
               <span id="enter_text">Enter</span>
+            </button>
+            <button id="learn_more_button" class="show_details">
+              <span id="enter_text">About</span>
             </button>
           </div>
         </div>
@@ -292,11 +295,11 @@
             >
               <div class="splide__track">
                 <ul class="splide__list">
-                  <li class="splide__slide"><img src="images/005.png" /></li>
-                  <li class="splide__slide"><img src="images/002.png" /></li>
-                  <li class="splide__slide"><img src="images/004.png" /></li>
-                  <li class="splide__slide"><img src="images/001.png" /></li>
-                  <li class="splide__slide"><img src="images/006.png" /></li>
+                  <li class="splide__slide"><img src="images/005.jpg" /></li>
+                  <li class="splide__slide"><img src="images/001.jpg" /></li>
+                  <li class="splide__slide"><img src="images/002.jpg" /></li>
+                  <li class="splide__slide"><img src="images/004.jpg" /></li>
+                  <li class="splide__slide"><img src="images/006.jpg" /></li>
                 </ul>
               </div>
             </div>
@@ -466,7 +469,14 @@
               in for real sensations in the future.
             </p> -->
 
-            <img src="images/me_kissing_me_detail.png" class="full_width_img" />
+            <!-- <img src="images/me_kissing_me_detail.jpg" class="full_width_img" /> -->
+            <video loop autoplay mute class="full_width_img">
+              <source
+                src="images/me_kissing_me_clip_trim_compressed_01.mp4"
+                type="video/mp4"
+              />
+              Your browser does not support the video tag.
+            </video>
 
             <h3>Closing Remarks</h3>
             <p>
@@ -553,5 +563,140 @@
         </div>
       </div>
     </div>
+
+    <script>
+      const kissCrashVideo = document.getElementById("kiss_crash_video");
+      kissCrashVideo.currentTime = 3;
+      kissCrashVideo.play();
+      let hasKissCrashVideoLoaded = false;
+
+      // kissCrashVideo.addEventListener("play", function () {
+      // this.currentTime = 3;
+      // });
+      const slowKissVideo = document.getElementById("slow_kiss_video");
+      slowKissVideo.currentTime = 0;
+      slowKissVideo.play();
+      let hasSlowKissVideoLoaded = false;
+
+      kissCrashVideo.onplaying = function () {
+        console.log("kiss/crash video is now loaded and playing");
+        hasKissCrashVideoLoaded = true;
+
+        if (hasKissCrashVideoLoaded && hasSlowKissVideoLoaded) {
+          enableEnter();
+        }
+      };
+      slowKissVideo.onplaying = function () {
+        console.log("me kissing me video is now loaded and playing");
+        hasSlowKissVideoLoaded = true;
+
+        if (hasKissCrashVideoLoaded && hasSlowKissVideoLoaded) {
+          enableEnter();
+        }
+      };
+      /**
+       * UI
+       */
+      const content = document.getElementById("content");
+      const intro = document.getElementById("intro_container");
+      const details = document.getElementById("details_container");
+      const details_scroller = document.getElementById("details_content_outer");
+      function hideIntro() {
+        intro.classList.add("hide");
+        const distance = fitCameraToSelection(
+          camera,
+          controls,
+          [centralBox, rightBox, leftBox],
+          1.75,
+          false
+        );
+
+        gsap.to(camera.position, {
+          duration: 3,
+          delay: 0,
+          // y: -verticalShift,
+          z: distance * 1,
+          ease: "back.out(2)",
+        });
+      }
+
+      function playVideos() {
+        kissCrashVideo.currentTime = 0;
+        slowKissVideo.currentTime = 0;
+
+        kissCrashVideo.muted = false;
+        kissCrashVideo.play();
+      }
+
+      function pauseVideos() {
+        kissCrashVideo.pause();
+        slowKissVideo.pause();
+      }
+
+      function resumeVideos() {
+        kissCrashVideo.play();
+        slowKissVideo.play();
+      }
+
+      /**
+       * Buttons
+       */
+      const enterButton = document.getElementById("enter_button");
+      enterButton.addEventListener("click", () => {
+        // document.documentElement.requestFullscreen();
+        hideIntro();
+        playVideos();
+
+        setTimeout(() => {
+          content.style.zIndex = -1;
+        }, 500);
+      });
+
+      // const showDetailsButton = document.getElementById("show_details_button");
+      const showDetailsButtons =
+        document.getElementsByClassName("show_details");
+      Array.from(showDetailsButtons).forEach((btn) =>
+        btn.addEventListener("click", () => {
+          details_scroller.scrollTop = 0;
+          content.style.zIndex = "inherit";
+
+          // intro.classList.add("hide");
+          // content.classList.remove("hide");
+          details.classList.remove("hide");
+          document.body.classList.add("details_visible");
+          pauseVideos();
+        })
+      );
+
+      const hideDetailsButton =
+        document.getElementsByClassName("close_details");
+      Array.from(hideDetailsButton).forEach(function (element) {
+        element.addEventListener("click", () => {
+          details.classList.add("hide");
+          document.body.classList.remove("details_visible");
+          resumeVideos();
+
+          if (intro.classList.contains("hide")) {
+            setTimeout(() => {
+              content.style.zIndex = -1;
+            }, 500);
+          }
+        });
+      });
+
+      function enableEnter() {
+        enterButton.disabled = false;
+        enterButton.classList.remove("is_loading");
+        console.log("enable enter");
+      }
+      function disableEnter() {
+        enterButton.disabled = true;
+        enterButton.classList.add("is_loading");
+      }
+      if (!hasKissCrashVideoLoaded || !hasSlowKissVideoLoaded) {
+        disableEnter();
+      }
+    </script>
+    <script type="module" src="./script.js"></script>
   </body>
 </html>

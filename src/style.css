@@ -74,6 +74,7 @@ button, input[type="submit"], input[type="reset"] {
 }
 #enter_button {
     opacity: 1;
+    margin-right: 12px;
 }
 #enter_button #loading_text {
     display: none;
@@ -92,6 +93,7 @@ button, input[type="submit"], input[type="reset"] {
     display: inline-block;
     animation: dotty steps(1,end) 1s infinite;
     content: '';
+    
   }
   
   @keyframes dotty {
@@ -433,6 +435,7 @@ p {
 .splide img {
     height: 60vh;
     object-fit: cover;
+    width: 100%;
 }
 
 
