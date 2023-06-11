@@ -6,12 +6,11 @@ import * as dat from "lil-gui";
 import { ParallaxBarrierEffect } from "three/addons/effects/ParallaxBarrierEffect.js";
 import gsap from "gsap";
 import Splide from "@splidejs/splide";
+import getCountry from "./get-country";
 
 import "@splidejs/splide/css";
 
 const threeDebug = false;
-
-console.log("JAVASCRIPT LOADED!");
 
 /**
  * Base
@@ -551,6 +550,40 @@ function disableEnter() {
 if (!hasKissCrashVideoLoaded || !hasSlowKissVideoLoaded) {
   disableEnter();
 }
+
+/**
+ * Handle disabling videos for in person screenings
+ */
+function maybeDisableVideos() {
+  const country = getCountry();
+
+  // only block in Spain
+  const isBlockedInCountry = country == "Spain";
+  if (!isBlockedInCountry) return;
+
+  // allow force show
+  const urlParams = new URLSearchParams(window.location.search);
+  const forceShow = urlParams.get("forceShow");
+  if (forceShow) return;
+
+  // only block for relevant dates
+  const date = new Date();
+  const month = date.getMonth();
+  const monthDay = date.getDate();
+  const year = date.getFullYear();
+  if (year != 2023 || month != 5) return;
+  if (monthDay < 14 || monthDay > 24) return;
+
+  const disabledScreeningMessage = document.getElementById(
+    "disabled-screening-message"
+  );
+  disabledScreeningMessage.classList.remove("hidden");
+  enterButton.classList.add("hidden");
+
+  const body = document.body.classList.add("hide_embeds");
+}
+
+maybeDisableVideos();
 // hideDetailsButton;
 
 for (let i = 0; i < 20; i++) {

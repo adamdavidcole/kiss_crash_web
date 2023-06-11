@@ -88,6 +88,9 @@ button, input[type="submit"], input[type="reset"] {
 #enter_button.is_loading #enter_text {
     display: none;
 }
+#enter_button.hidden {
+    display: none;
+}
 
 .is_loading #loading_text:after {
     display: inline-block;
@@ -346,6 +349,20 @@ p {
     margin-bottom: 0;
 }
 
+/* hide video embeds */
+.hide_embeds .embed_total_container.festival_hide {
+    display: none;
+}
+.embed_placeholder {
+    display: none;
+    font-size: 16px;
+    font-style: italic;
+    color: #4d0f0f;
+}
+.hide_embeds .embed_placeholder {
+    display: block;
+}
+
 #end_of_details_button_container {
     padding-bottom: 40px;
 }
@@ -355,6 +372,15 @@ p {
     height: 800px;
     object-fit: cover;
     margin: 120px 0;
+}
+
+#disabled-screening-message {
+    font-size: 14px;
+    font-style: italic;
+    color: #4d0f0f;
+}
+#disabled-screening-message.hidden {
+    display: none;
 }
 
 /**
