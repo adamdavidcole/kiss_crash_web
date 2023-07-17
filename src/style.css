@@ -470,6 +470,12 @@ p {
 }
 
 
+/**
+ * Anonymous 
+ */
+body.is_anonymous .is_anonymous {
+    display: none !important;
+}
 
 @media screen and (max-width: 1200px) {
     h1 {

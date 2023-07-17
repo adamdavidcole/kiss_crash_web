@@ -670,3 +670,10 @@ const tick = () => {
 };
 
 tick();
+
+const urlParams = new URLSearchParams(window.location.search);
+const shouldBeAnonymous = !!urlParams.get("is_anonymous");
+if (shouldBeAnonymous) {
+  document.body.classList.add("is_anonymous");
+  document.title = "Kiss/Crash | AI Art Installation";
+}
