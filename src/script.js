@@ -677,3 +677,19 @@ if (shouldBeAnonymous) {
   document.body.classList.add("is_anonymous");
   document.title = "Kiss/Crash | AI Art Installation";
 }
+
+/**
+ * Hidden Email Functionality
+ */
+
+let isEmailHidden = true;
+const hiddenEmailLink = document.getElementById("hidden_email_link");
+function revealHiddenEmail(e) {
+  if (!isEmailHidden) return;
+
+  e.preventDefault();
+  hiddenEmailLink.innerText = "acole9@gmail.com";
+  hiddenEmailLink.href = "mailto:acole9@gmail.com";
+}
+
+hiddenEmailLink.addEventListener("click", revealHiddenEmail);
